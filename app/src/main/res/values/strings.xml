@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GENIUS</string>
+    <string name="start_game">START GAME</string>
+    <string name="new_game">NEW GAME</string>
+    <string name="load_game">LOAD GAME</string>
+    <string name="records">RECORDS</string>
+    <string name="quit">QUIT</string>
+    <string name="easy">EASY</string>
+    <string name="normal">NORMAL</string>
+    <string name="hardcore">HARDCORE</string>
+    <string name="free">FREE</string>
+    <string name="gg">GG</string>
+    <string name="awesome">AWESOME</string>
+    <string name="errou">ERROOUUUUU</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="top_line">top_line</string>
+    <string name="medium_line">medium_line</string>
+    <string name="bottom_line">bottom_line</string>
+</resources>
