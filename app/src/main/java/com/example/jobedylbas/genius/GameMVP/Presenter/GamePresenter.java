@@ -30,7 +30,7 @@ public class GamePresenter implements GamePresenterInterface{
     public void newRound(){
         try {
             model.newBtnSeq();
-            view.playSeq(model.getBtnSqe());
+            view.playSeq(model.getBtnSeq());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

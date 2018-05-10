@@ -13,35 +13,41 @@ import java.util.Random;
 
 public class GameModel implements GameModelInterface {
     private Queue<Integer> btn_sqe;
-    private Integer btn_sqe_size;
+    private Queue<Integer> last_sqe;
     private List<Integer> btn_available;
 
     public GameModel(List<Integer> btn_available) {
         this.btn_sqe = new LinkedList<>();
-        this.btn_sqe_size = btn_sqe.size();
+        this.last_sqe = new LinkedList<>();
         this.btn_available = btn_available;
     }
 
     // Return the size of the button sequence
-    public Integer getBtnSqnSize() { return this.btn_sqe_size; }
+    public Integer getLastBtnSqnSize() { return btn_sqe.size()-1; }
 
-    public Queue<Integer> getBtnSqe(){ return this.btn_sqe; }
+    public Queue<Integer> getBtnSeq(){ return btn_sqe; }
 
     // Create a new button sequence
     public void newBtnSeq() {
         Random rand = new Random();
-        this.btn_sqe_size++;
-        for (int i = 0; i < btn_sqe_size; i++) {
-            this.btn_sqe.add(this.btn_available.get(rand.nextInt(this.btn_available.size())));
-        }
+        btn_sqe = last_sqe;
+        btn_sqe.add(btn_available.get(rand.nextInt(btn_available.size())));
+        last_sqe = new LinkedList<>();
     }
 
     // Check if the button is equal the head of the button queue
     public Boolean checkBtn(Integer btn_id) {
-        if(btn_id == this.btn_sqe.element()){
-            this.btn_sqe.remove();
-            return Boolean.TRUE;
+        if(btn_id == btn_sqe.element()){
+            last_sqe.add(btn_sqe.poll());
+            return true;
         }
-        else return Boolean.FALSE;
+        else return false;
+    }
+
+    public Boolean isEmptySqe(){
+        if(this.btn_sqe.isEmpty()){
+            return true;
+        }
+        else return false;
     }
 }
