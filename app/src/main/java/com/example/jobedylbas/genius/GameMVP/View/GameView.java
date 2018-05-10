@@ -3,6 +3,7 @@ package com.example.jobedylbas.genius.GameMVP.View;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,6 +26,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
     private GamePresenter presenter;
     private static List<Integer> btn_list;
     private static String game_diff;
+    private SimonButton[] buttons;
 
 
     @Override
@@ -35,6 +37,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         presenter = new GamePresenter(this);
         presenter.onCreate(game_diff);
         presenter.setModel(AllButtonsId());
+        presenter.newRound();
     }
 
     // Get all the buttons id
@@ -64,7 +67,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         switch (game_diff){
             case "EASY":
                 setContentView(R.layout.activity_game_easy);
-                SimonButton[] buttons = this.addSoundToBtn();
+                buttons = this.addSoundToBtn();
                 this.setOnClick(buttons);
                 break;
             case "NORMAL":
@@ -78,11 +81,27 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         }
     }
 
-    public void playSeq(Queue<Integer> btn_ids) throws InterruptedException {
-        for(final Integer btn_id : btn_ids){
-            findViewById(btn_id).performLongClick();
-            sleep(1000);
-        }
+    public void playSeq(Queue<Integer> btn_ids) {
+        final Queue<Integer> btn_list = btn_ids;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(final Integer btn_id : btn_list) {
+                    try {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(btn_id).performLongClick();
+                            }
+                        });
+                        //Thread.sleep(250);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     private SimonButton[] addSoundToBtn(){

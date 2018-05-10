@@ -1,5 +1,7 @@
 package com.example.jobedylbas.genius.GameMVP.Presenter;
 
+import android.util.Log;
+
 import com.example.jobedylbas.genius.GameMVP.Model.GameModel;
 import com.example.jobedylbas.genius.GameMVP.View.GameView;
 
@@ -28,12 +30,7 @@ public class GamePresenter implements GamePresenterInterface{
     }
 
     public void newRound(){
-        try {
             model.newBtnSeq();
             view.playSeq(model.getBtnSeq());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
     }
 }
