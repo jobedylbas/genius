@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -67,8 +68,8 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         switch (game_diff){
             case "EASY":
                 setContentView(R.layout.activity_game_easy);
-                buttons = this.addSoundToBtn();
-                this.setOnClick(buttons);
+                buttons = createButtons();
+                setOnClick(buttons);
                 break;
             case "NORMAL":
                 setContentView(R.layout.activity_game_normal);
@@ -92,6 +93,8 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
+                                Log.d("playSeq", String.valueOf(findViewById(btn_id)));
                                 findViewById(btn_id).performLongClick();
                             }
                         });
@@ -101,17 +104,21 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
                     }
                 }
             }
-        });
+        }).start();
     }
 
-    private SimonButton[] addSoundToBtn(){
+    private SimonButton[] createButtons(){
 
         MediaPlayer[] sounds = new Media(this).getMedias();
 
-        SimonButton btn_red = new SimonButton(sounds[0], (Button) this.findViewById(R.id.btn_red));
-        SimonButton btn_blue = new SimonButton(sounds[1], (Button) this.findViewById(R.id.btn_blue));
-        SimonButton btn_green = new SimonButton(sounds[2], (Button) this.findViewById(R.id.btn_green));
-        SimonButton btn_yellow = new SimonButton(sounds[3], (Button) this.findViewById(R.id.btn_yellow));
+        SimonButton btn_red = new SimonButton(sounds[0], (Button) this.findViewById(R.id.btn_red),
+                R.drawable.background_red, R.drawable.background_red_shiny);
+        SimonButton btn_blue = new SimonButton(sounds[1], (Button) this.findViewById(R.id.btn_blue),
+                R.drawable.background_blue, R.drawable.background_blue_shiny);
+        SimonButton btn_green = new SimonButton(sounds[2], (Button) this.findViewById(R.id.btn_green),
+                R.drawable.background_green, R.drawable.background_green_shiny);
+        SimonButton btn_yellow = new SimonButton(sounds[3], (Button) this.findViewById(R.id.btn_yellow),
+                R.drawable.background_yellow, R.drawable.background_yellow_shiny);
 
         SimonButton[] buttons = {btn_red, btn_green, btn_blue, btn_yellow};
         return buttons;
@@ -121,16 +128,63 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
     private void setOnClick(SimonButton[] buttons){
 
         for (final SimonButton current_button : buttons) {
-            current_button.getButtonObject().setOnClickListener(new View.OnClickListener(){
+            current_button.getButtonObject().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
-                    current_button.getSound().start();
+                public boolean onLongClick(View v) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    current_button.setBkgShiny();
+                                    current_button.getSound().start();
+                                }
+                            });
+
+                            try {
+                                Thread.sleep(600);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    current_button.setBkgNormal();
+                                }
+                            });
+
+                        }
+
+                    }).start();
+                    return true;
                 }
             });
-            current_button.getButtonObject().setOnLongClickListener(new View.OnLongClickListener(){
+            current_button.getButtonObject().setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public boolean onLongClick(View v){
-                    current_button.getSound().start();
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                current_button.getSound().start();
+                                current_button.setBkgShiny();
+                            }
+
+                        });
+                    }
+
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                current_button.setBkgNormal();
+                                Log.d("View/onTouch/ButtonId", String.valueOf(current_button.getButtonObject().getId()));
+                                presenter.checkButton(current_button.getButtonObject().getId());
+                            }
+                        });
+                    }
+
                     return true;
                 }
             });
@@ -138,6 +192,5 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         }
 
     }
-
 
 }

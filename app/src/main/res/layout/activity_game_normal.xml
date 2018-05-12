@@ -20,14 +20,14 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_weight=".33"
-            android:background="@drawable/btn_act_red" />
+            android:background="@drawable/background_red" />
         <Button
             style="?android:attr/buttonBarStyle"
             android:id="@+id/btn_blue"
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_weight=".33"
-            android:background="@drawable/btn_act_blue" />
+            android:background="@drawable/background_blue" />
 
         <Button
             style="?android:attr/buttonBarStyle"
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_weight=".33"
-            android:background="@drawable/btn_act_green" />
+            android:background="@drawable/background_green" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_weight=".33"
-            android:background="@drawable/btn_act_yellow" />
+            android:background="@drawable/background_yellow" />
 
         <Button
             style="?android:attr/buttonBarStyle"

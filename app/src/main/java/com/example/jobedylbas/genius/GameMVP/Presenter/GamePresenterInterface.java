@@ -12,4 +12,5 @@ public interface GamePresenterInterface {
     public void setModel(List<Integer> btn_ids);
     public void onCreate(String game_diff);
     public void newRound();
+    public void checkButton(Integer btn_id);
 }

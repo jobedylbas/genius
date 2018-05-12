@@ -33,4 +33,18 @@ public class GamePresenter implements GamePresenterInterface{
             model.newBtnSeq();
             view.playSeq(model.getBtnSeq());
     }
+
+    public void checkButton(Integer btn_id){
+        if(model.checkBtn(btn_id)) {
+            Log.d("/Presenter/CheckBtn", "Right Button");
+            if (model.isEmptySqe()) {
+                Log.d("Presenter/CheckBtn", "Empty Sequence");
+                this.newRound();
+            }
+        }
+        else{
+               Log.d("Presenter/CheckBtn","Wrong Button");
+        }
+
+    }
 }

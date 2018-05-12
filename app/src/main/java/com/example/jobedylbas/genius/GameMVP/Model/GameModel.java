@@ -1,5 +1,7 @@
 package com.example.jobedylbas.genius.GameMVP.Model;
 
+import android.util.Log;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -31,23 +33,31 @@ public class GameModel implements GameModelInterface {
     public void newBtnSeq() {
         Random rand = new Random();
         btn_sqe = last_sqe;
-        btn_sqe.add(btn_available.get(rand.nextInt(btn_available.size())));
+        Integer btn = btn_available.get(rand.nextInt(btn_available.size()));
+        Log.d("Sorted", String.valueOf(btn));
+        btn_sqe.add(btn);
         last_sqe = new LinkedList<>();
     }
 
     // Check if the button is equal the head of the button queue
-    public Boolean checkBtn(Integer btn_id) {
-        if(btn_id == btn_sqe.element()){
+    public boolean checkBtn(Integer btn_id) {
+        if (btn_sqe.element().equals(btn_id)) {
+            Log.d("Model/checkBtn", "Right Button");
             last_sqe.add(btn_sqe.poll());
             return true;
         }
-        else return false;
+        else {
+            Log.d("Model/checkBtn", "Right Button");
+            return false;
+        }
     }
 
-    public Boolean isEmptySqe(){
-        if(this.btn_sqe.isEmpty()){
-            return true;
-        }
-        else return false;
+    public boolean isEmptySqe(){
+        return btn_sqe.isEmpty();
+    }
+
+    public void resetModel(){
+        this.btn_sqe = new LinkedList<>();
+        this.last_sqe = new LinkedList<>();
     }
 }

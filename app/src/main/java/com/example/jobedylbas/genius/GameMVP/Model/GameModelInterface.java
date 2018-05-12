@@ -10,5 +10,7 @@ public interface GameModelInterface {
     Integer getLastBtnSqnSize();
     void newBtnSeq();
     Queue<Integer> getBtnSeq();
-    Boolean checkBtn(Integer btn_id);
+    boolean checkBtn(Integer btn_id);
+    boolean isEmptySqe();
+    void resetModel();
 }

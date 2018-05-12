@@ -1,5 +1,6 @@
 package com.example.jobedylbas.genius.GameMVP.View;
 
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
 import android.widget.Button;
@@ -11,11 +12,16 @@ import android.widget.Button;
 public class SimonButton  {
 
     protected MediaPlayer sound;
-    protected Button buttonObject;
+    protected Button button_object;
+    protected int color;
+    protected int shiny_color;
 
-    public SimonButton (MediaPlayer sound, Button buttonObject){
-        this.setSound(sound);
-        this.setButtonObject(buttonObject);
+
+    public SimonButton (MediaPlayer sound, Button button_object, int color, int shiny_color){
+        this.sound = sound;
+        this.button_object = button_object;
+        this.color = color;
+        this.shiny_color = shiny_color;
     }
 
 
@@ -28,10 +34,18 @@ public class SimonButton  {
     }
 
     public Button getButtonObject() {
-        return buttonObject;
+        return button_object;
     }
 
     public void setButtonObject(Button buttonObject) {
-        this.buttonObject = buttonObject;
+        this.button_object = buttonObject;
+    }
+
+    public void setBkgNormal(){
+        this.button_object.setBackgroundResource(color);
+    }
+
+    public void setBkgShiny(){
+        this.button_object.setBackgroundResource(shiny_color);
     }
 }
