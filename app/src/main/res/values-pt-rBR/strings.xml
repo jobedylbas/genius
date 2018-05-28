@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GENIUS</string>
+    <string name="start_game">COMEÇAR JOGO</string>
+    <string name="new_game">NOVO JOGO</string>
+    <string name="restart">RECOMEÇAR</string>
+    <string name="save">SALVAR</string>
+    <string name="load_game">CARREGAR JOGO</string>
+    <string name="records">RECORDES</string>
+    <string name="quit">SAIR</string>
+    <string name="easy">FÁCIL</string>
+    <string name="hardcore">DIFÍCIL</string>
+    <string name="free">LIVRE</string>
+    <string name="mainmenu">MENU INICIAL</string>
+    <string name="awesome">FANTÁSTICO</string>
+    <string name="youmade">Sua maior sequência foi</string>
+    <string name="buttons">botões</string>
+    <string name="game_over">FIM DE JOGO</string>
+</resources>

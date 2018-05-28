@@ -25,7 +25,7 @@
 
     <Button
         android:id="@+id/records_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="112dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -41,7 +41,7 @@
 
     <Button
         android:id="@+id/load_game_btn"
-        android:layout_width="120dp"
+        android:layout_width="153dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -57,7 +57,7 @@
 
     <Button
         android:id="@+id/new_game_btn"
-        android:layout_width="120dp"
+        android:layout_width="153dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"

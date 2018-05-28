@@ -17,15 +17,18 @@ public class GameModel implements GameModelInterface {
     private Queue<Integer> btn_sqe;
     private Queue<Integer> last_sqe;
     private List<Integer> btn_available;
+    private Integer sqe_size;
 
     public GameModel(List<Integer> btn_available) {
+        this.sqe_size = 0;
         this.btn_sqe = new LinkedList<>();
         this.last_sqe = new LinkedList<>();
         this.btn_available = btn_available;
     }
 
     // Return the size of the button sequence
-    public Integer getLastBtnSqnSize() { return btn_sqe.size()-1; }
+    public Integer getSqnSize() {
+        return sqe_size;}
 
     public Queue<Integer> getBtnSeq(){ return btn_sqe; }
 
@@ -36,6 +39,7 @@ public class GameModel implements GameModelInterface {
         Integer btn = btn_available.get(rand.nextInt(btn_available.size()));
         Log.d("Sorted", String.valueOf(btn));
         btn_sqe.add(btn);
+        sqe_size = btn_sqe.size() -1;
         last_sqe = new LinkedList<>();
     }
 
@@ -57,6 +61,7 @@ public class GameModel implements GameModelInterface {
     }
 
     public void resetModel(){
+        this.sqe_size = 0;
         this.btn_sqe = new LinkedList<>();
         this.last_sqe = new LinkedList<>();
     }

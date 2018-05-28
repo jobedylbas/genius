@@ -36,7 +36,7 @@ public class DifficultyMenu extends AppCompatActivity {
                 else {
                     Intent game = new Intent(view.getContext(), GameView.class);
                     Button b = (Button) view;
-                    String game_difficulty = b.getText().toString();
+                    Integer game_difficulty = b.getId();
                     game.putExtra("GAME_DIFF", game_difficulty);
                     startActivity(game);
                     onPause();

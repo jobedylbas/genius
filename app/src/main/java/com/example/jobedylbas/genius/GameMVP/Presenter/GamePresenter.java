@@ -25,7 +25,7 @@ public class GamePresenter implements GamePresenterInterface{
     }
 
     @Override
-    public void onCreate(String game_diff) {
+    public void onCreate(Integer game_diff) {
         view.setLayout(game_diff);
     }
 
@@ -44,6 +44,7 @@ public class GamePresenter implements GamePresenterInterface{
         }
         else{
                Log.d("Presenter/CheckBtn","Wrong Button");
+                view.gameOver(model.getSqnSize());
         }
 
     }

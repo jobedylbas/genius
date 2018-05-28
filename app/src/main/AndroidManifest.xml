@@ -25,7 +25,8 @@
         </activity>
 
         <activity android:name=".Free"></activity>
-        <activity android:name=".GameMVP.View.GameView"></activity>
+        <activity android:name=".GameMVP.View.GameView"
+            ></activity>
     </application>
 
 </manifest>

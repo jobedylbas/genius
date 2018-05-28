@@ -7,7 +7,7 @@ import java.util.Queue;
  */
 
 public interface GameModelInterface {
-    Integer getLastBtnSqnSize();
+    Integer getSqnSize();
     void newBtnSeq();
     Queue<Integer> getBtnSeq();
     boolean checkBtn(Integer btn_id);

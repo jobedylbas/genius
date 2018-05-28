@@ -1,14 +1,20 @@
 package com.example.jobedylbas.genius.GameMVP.View;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.jobedylbas.genius.GameMVP.Presenter.GamePresenter;
+import com.example.jobedylbas.genius.MainActivity;
 import com.example.jobedylbas.genius.R;
 
 import java.util.LinkedList;
@@ -26,14 +32,14 @@ import static java.lang.Thread.sleep;
 public class GameView extends AppCompatActivity implements GameViewInterface{
     private GamePresenter presenter;
     private static List<Integer> btn_list;
-    private static String game_diff;
+    private static Integer game_diff;
     private SimonButton[] buttons;
-
+    private Integer interval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        game_diff = getIntent().getStringExtra("GAME_DIFF");
+        game_diff = getIntent().getIntExtra("GAME_DIFF", R.id.easy_btn);
 
         presenter = new GamePresenter(this);
         presenter.onCreate(game_diff);
@@ -43,11 +49,12 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
 
     // Get all the buttons id
     private List<Integer> AllButtonsId(){
-        List<View> all_btn;
+        List<View> all_btn = null;
         List<Integer> all_btn_id = new LinkedList<>();
 
         // Get All Buttons
         all_btn = (findViewById(R.id.top_line)).getTouchables();
+        
         try {
             all_btn.addAll((findViewById(R.id.medium_line)).getTouchables());
         }catch (NullPointerException npe) {
@@ -64,22 +71,27 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
     }
 
     // Set the layout of the game based on difficulty
-    public void setLayout(String game_diff){
+    public void setLayout(Integer game_diff){
         switch (game_diff){
-            case "EASY":
+            case R.id.easy_btn:
                 setContentView(R.layout.activity_game_easy);
-                buttons = createButtons();
-                setOnClick(buttons);
+                interval = 1000;
                 break;
-            case "NORMAL":
+            case R.id.normal_btn:
                 setContentView(R.layout.activity_game_normal);
+                interval = 800;
                 break;
-            case "HARDCORE":
+            case R.id.hardcore_btn:
                 setContentView(R.layout.activity_game_harcore);
+                interval = 600;
                 break;
             default:
                 break;
         }
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
+        buttons = createButtons();
+        setOnClick(buttons);
     }
 
     public void playSeq(Queue<Integer> btn_ids) {
@@ -89,7 +101,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
             public void run() {
                 for(final Integer btn_id : btn_list) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(interval);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -107,6 +119,38 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         }).start();
     }
 
+    public void gameOver(Integer score){
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View game_over_view = layoutInflater.inflate(R.layout.inflate_end_game, null, false);
+
+        LinearLayout container = findViewById(R.id.container);
+
+        container.addView(game_over_view);
+        TextView score_view = container.findViewById(R.id.finalscore);
+        score_view.setText(score.toString());
+
+        findViewById(R.id.restart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent main_menu = new Intent(GameView.this,GameView.class);
+                main_menu.putExtra("GAME_DIFF", game_diff);
+                finish();
+                startActivity(main_menu);
+            }
+        });
+
+        findViewById(R.id.to_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent main_menu = new Intent(GameView.this, MainActivity.class);
+                finish();
+                startActivity(main_menu);
+            }
+        });
+
+    }
+
     private SimonButton[] createButtons(){
 
         MediaPlayer[] sounds = new Media(this).getMedias();
@@ -121,6 +165,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
                 R.drawable.background_yellow, R.drawable.background_yellow_shiny);
 
         SimonButton[] buttons = {btn_red, btn_green, btn_blue, btn_yellow};
+
         return buttons;
 
     }
@@ -160,6 +205,12 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
                     return true;
                 }
             });
+            current_button.getButtonObject().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    current_button.getSound().start();
+                }
+                });
             current_button.getButtonObject().setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -178,6 +229,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                current_button.getSound().stop();
                                 current_button.setBkgNormal();
                                 Log.d("View/onTouch/ButtonId", String.valueOf(current_button.getButtonObject().getId()));
                                 presenter.checkButton(current_button.getButtonObject().getId());

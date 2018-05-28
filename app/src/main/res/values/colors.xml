@@ -21,5 +21,6 @@
     <color name="colorShinyOrange">#FF5100</color>
     <color name="colorBrown">#996B42</color>
     <color name="colorShinyBrown">#592E0b</color>
+    <color name="colorTransGray">#CCE8E8E8</color>
 
 </resources>

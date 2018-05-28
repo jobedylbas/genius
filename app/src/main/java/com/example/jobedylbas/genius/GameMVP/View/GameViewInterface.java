@@ -8,6 +8,6 @@ import java.util.Queue;
  */
 
 public interface GameViewInterface {
-    public void setLayout(String game_diff);
+    public void setLayout(Integer game_diff);
     public void playSeq(Queue<Integer> btn_ids) throws InterruptedException;
 }
