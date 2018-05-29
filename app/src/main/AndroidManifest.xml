@@ -27,6 +27,9 @@
         <activity android:name=".Free"></activity>
         <activity android:name=".GameMVP.View.GameView"
             ></activity>
+        <activity android:name=".RecordsType"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

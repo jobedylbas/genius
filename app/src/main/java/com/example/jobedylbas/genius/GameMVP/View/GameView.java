@@ -96,6 +96,10 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
 
     public void playSeq(Queue<Integer> btn_ids) {
         final Queue<Integer> btn_list = btn_ids;
+        for (SimonButton current_button : buttons){
+            current_button.getButtonObject().setEnabled(false);
+            current_button.getButtonObject().setClickable(false);
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -117,9 +121,18 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
                 }
             }
         }).start();
+        for (SimonButton current_button : buttons){
+            current_button.getButtonObject().setEnabled(true);
+            current_button.getButtonObject().setClickable(true);
+        }
     }
 
     public void gameOver(Integer score){
+        for (final SimonButton current_button : buttons){
+            current_button.getButtonObject().setEnabled(false);
+            current_button.getButtonObject().setClickable(false);
+        }
+
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         View game_over_view = layoutInflater.inflate(R.layout.inflate_end_game, null, false);
@@ -133,10 +146,9 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
         findViewById(R.id.restart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent main_menu = new Intent(GameView.this,GameView.class);
-                main_menu.putExtra("GAME_DIFF", game_diff);
-                finish();
-                startActivity(main_menu);
+                LinearLayout container = findViewById(R.id.container);
+                container.removeView(findViewById(R.id.endgame));
+                presenter.newRound();
             }
         });
 
@@ -155,7 +167,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface{
 
         MediaPlayer[] sounds = new Media(this).getMedias();
 
-        SimonButton btn_red = new SimonButton(sounds[0], (Button) this.findViewById(R.id.btn_red),
+        SimonButton btn_red = new SimonButton(sounds[0], (Button) findViewById(R.id.btn_red),
                 R.drawable.background_red, R.drawable.background_red_shiny);
         SimonButton btn_blue = new SimonButton(sounds[1], (Button) this.findViewById(R.id.btn_blue),
                 R.drawable.background_blue, R.drawable.background_blue_shiny);

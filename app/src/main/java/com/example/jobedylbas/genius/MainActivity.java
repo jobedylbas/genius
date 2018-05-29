@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity{
 
         findViewById(R.id.new_game_btn).setOnClickListener(clickHandler);
         Button load_game_btn = (Button) findViewById(R.id.load_game_btn);
-        Button records_btn = (Button) findViewById(R.id.records_btn);
+        findViewById(R.id.records_btn).setOnClickListener(clickHandler);
         findViewById(R.id.quit_btn).setOnClickListener(clickHandler);
     }
 
@@ -28,8 +28,13 @@ public class MainActivity extends AppCompatActivity{
             switch (view.getId()) {
                 case R.id.new_game_btn:
                     Intent new_game = new Intent(MainActivity.this, DifficultyMenu.class);
-                    startActivity(new_game);
                     onPause();
+                    startActivity(new_game);
+                    break;
+                case R.id.records_btn:
+                    Intent records = new Intent(MainActivity.this, RecordsType.class);
+                    onPause();
+                    startActivity(records);
                     break;
                 case R.id.quit_btn:
                     finish();
