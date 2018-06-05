@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="false"
+        android:layout_margin="10dp"
+        android:background="@drawable/border">
+
+        <TextView
+            android:id="@+id/position_text"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/player_text"
+            android:layout_width="210dp"
+            android:layout_height="match_parent"
+            android:text="jobedylbas"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/seq_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="150"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            />
+    </LinearLayout>
+</LinearLayout>

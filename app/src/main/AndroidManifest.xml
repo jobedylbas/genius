@@ -25,10 +25,14 @@
         </activity>
 
         <activity android:name=".Free"></activity>
-        <activity android:name=".GameMVP.View.GameView"
+        <activity android:name=".ui.game.GameView"
             ></activity>
-        <activity android:name=".RecordsType"
+
+        <activity android:name=".RecordsMenu"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
+        <activity android:name=".ui.records.RecordsView">
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.jobedylbas.genius.GameMVP.Model;
+package com.example.jobedylbas.genius.database.models;
 
 import java.util.Queue;
 
@@ -7,10 +7,10 @@ import java.util.Queue;
  */
 
 public interface GameModelInterface {
-    Integer getSqnSize();
+    Integer getSeqSize();
     void newBtnSeq();
     Queue<Integer> getBtnSeq();
     boolean checkBtn(Integer btn_id);
-    boolean isEmptySqe();
+    boolean isEmptySeq();
     void resetModel();
 }

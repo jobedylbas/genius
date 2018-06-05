@@ -1,4 +1,4 @@
-package com.example.jobedylbas.genius.GameMVP.View;
+package com.example.jobedylbas.genius.ui.game;
 
 import java.util.List;
 import java.util.Queue;

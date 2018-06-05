@@ -18,4 +18,5 @@
     <string name="game_over">GAME OVER</string>
     <string name="youmade">Your biggest sequence was</string>
     <string name="buttons">buttons</string>
+    <string name="norecords">No records yet.</string>
 </resources>

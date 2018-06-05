@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.jobedylbas.genius.GameMVP.View.GameView;
+import com.example.jobedylbas.genius.ui.game.GameView;
 
 /**
  * Created by jobedylbas on 02/05/18.

@@ -1,4 +1,4 @@
-package com.example.jobedylbas.genius.GameMVP.Presenter;
+package com.example.jobedylbas.genius.ui.game;
 
 import android.view.View;
 
@@ -9,8 +9,8 @@ import java.util.List;
  */
 
 public interface GamePresenterInterface {
-    public void setModel(List<Integer> btn_ids);
-    public void onCreate(Integer game_diff);
+    public void setModel(List<Integer> btn_ids, Integer diff);
+    public void newGame(Integer diff);
     public void newRound();
     public void checkButton(Integer btn_id);
 }
