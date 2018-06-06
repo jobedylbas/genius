@@ -261,7 +261,9 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
 
     @Override
     public void onBackPressed()
-    {
+    {   for(SimonButton current_button : buttons){
+            sp.stop(current_button.getSoundId());
+        }
         sp.release();
         super.onBackPressed();
     }
