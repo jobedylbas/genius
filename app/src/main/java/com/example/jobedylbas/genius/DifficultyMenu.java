@@ -13,6 +13,7 @@ import com.example.jobedylbas.genius.ui.game.GameView;
  */
 
 public class DifficultyMenu extends AppCompatActivity {
+    private final static String TAG = DifficultyMenu.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,6 @@ public class DifficultyMenu extends AppCompatActivity {
                     Integer game_difficulty = b.getId();
                     game.putExtra("GAME_DIFF", game_difficulty);
                     startActivity(game);
-                    onPause();
                 }
             }
     };

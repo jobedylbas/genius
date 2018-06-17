@@ -5,6 +5,7 @@ package com.example.jobedylbas.genius.database.models;
  */
 
 public class Record {
+    private final static String TAG = Record.class.getName();
     private int id;
     private String timestamp;
     private String player_name;

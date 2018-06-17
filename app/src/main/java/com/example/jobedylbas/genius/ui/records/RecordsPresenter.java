@@ -14,6 +14,7 @@ import java.util.List;
  */
 
 public class RecordsPresenter {
+    private final static String TAG = RecordsPresenter.class.getName();
     private DatabaseHelper model;
     private RecordsView view;
     private SQLiteDatabase db;
@@ -24,13 +25,11 @@ public class RecordsPresenter {
     }
 
     public void getRecords(Integer difficulty){
-        List<Record> records = model.getRecordsByDifficulty(difficulty);
+        List<Record> records = model.getRecordsByDifficulty(difficulty, 10);
         if(records.isEmpty()){
-            Log.d("lola",String.valueOf(records.isEmpty()));
             view.noRecords();
         }
         else{
-            Log.d("lola",String.valueOf(records.isEmpty()));
             int i = 1;
             for(Record record : records){
                 view.inflate(i, record.getPlayerName(), record.getSeq_size());

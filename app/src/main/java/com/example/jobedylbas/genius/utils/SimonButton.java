@@ -10,7 +10,7 @@ import android.widget.Button;
  * Classe de modelo dos botoes
  */
 public class SimonButton  {
-
+    private final static String TAG = SimonButton.class.getName();
     protected int soundId;
     protected Button button_object;
     protected int color;

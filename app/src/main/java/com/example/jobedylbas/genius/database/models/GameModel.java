@@ -14,20 +14,21 @@ import java.util.Random;
  */
 
 public class GameModel implements GameModelInterface {
+    private final static String TAG = GameModel.class.getName();
     private Queue<Integer> backup_seq;
     private Queue<Integer> btn_seq;
-    private Queue<Integer> last_seq;
+    private Queue<Integer> aux_seq;
     private List<Integer> btn_available;
     private Integer seq_size;
     private Integer difficulty;
 
-    public GameModel(List<Integer> btn_available, Integer difficulty) {
-        this.seq_size = 0;
+    public GameModel(List<Integer> btn_available, int difficulty) {
         this.backup_seq = new LinkedList<>();
         this.btn_seq = new LinkedList<>();
-        this.last_seq = new LinkedList<>();
+        this.aux_seq = new LinkedList<>();
         this.btn_available = btn_available;
         this.difficulty = difficulty;
+        this.seq_size = aux_seq.size();
     }
 
     // Return the size of the button sequence
@@ -39,24 +40,24 @@ public class GameModel implements GameModelInterface {
     // Create a new button sequence
     public void newBtnSeq() {
         Random rand = new Random();
-        seq_size = last_seq.size();
-        btn_seq = last_seq;
+        seq_size = aux_seq.size();
+        btn_seq = aux_seq;
         Integer btn = btn_available.get(rand.nextInt(btn_available.size()));
-        Log.d("Sorted", String.valueOf(btn));
+        Log.d(TAG, String.valueOf(btn));
         btn_seq.add(btn);
         backup_seq.add(btn);
-        last_seq = new LinkedList<>();
+        aux_seq = new LinkedList<>();
     }
 
     // Check if the button is equal the head of the button queue
     public boolean checkBtn(Integer btn_id) {
         if (btn_seq.element().equals(btn_id)) {
-            Log.d("Model/checkBtn", "Right Button");
-            last_seq.add(btn_seq.poll());
+            Log.d(TAG, "Right Button");
+            aux_seq.add(btn_seq.poll());
             return true;
         }
         else {
-            Log.d("Model/checkBtn", "Right Button");
+            Log.d(TAG, "Wrong Button");
             return false;
         }
     }
@@ -68,6 +69,8 @@ public class GameModel implements GameModelInterface {
     public void resetModel(){
         this.seq_size = 0;
         this.btn_seq = new LinkedList<>();
-        this.last_seq = new LinkedList<>();
+        this.aux_seq = new LinkedList<>();
     }
+
+    public int getDifficulty(){ return this.difficulty;}
 }

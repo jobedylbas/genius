@@ -17,4 +17,5 @@
     <string name="buttons">botões</string>
     <string name="game_over">FIM DE JOGO</string>
     <string name="norecords">Não há recordes ainda.</string>
+    <string name="points">Pontuação: </string>
 </resources>

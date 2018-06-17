@@ -1,8 +1,13 @@
 package com.example.jobedylbas.genius.ui.game;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.speech.RecognizerResultsIntent;
 import android.util.Log;
 
+import com.example.jobedylbas.genius.database.DatabaseHelper;
 import com.example.jobedylbas.genius.database.models.GameModel;
+import com.example.jobedylbas.genius.database.models.Record;
 
 import java.util.List;
 
@@ -11,6 +16,9 @@ import java.util.List;
  */
 
 public class GamePresenter implements GamePresenterInterface {
+    private final static String TAG = GamePresenter.class.getName();
+    private Record record;
+    private DatabaseHelper dbhelper;
     private GameView view;
     private GameModel model;
 
@@ -35,20 +43,25 @@ public class GamePresenter implements GamePresenterInterface {
 
     public void checkButton(Integer btn_id){
         if(model.checkBtn(btn_id)) {
-            Log.d("/Presenter/CheckBtn", "Right Button");
+            Log.d(TAG, "Right Button");
             if (model.isEmptySeq()) {
-                Log.d("Presenter/CheckBtn", "Empty Sequence");
+                Log.d(TAG, "Empty Sequence");
                 this.newRound();
             }
         }
         else{
                Log.d("Presenter/CheckBtn","Wrong Button");
-                view.gameOver(model.getSeqSize());
+               view.gameOver(model.getSeqSize());
         }
 
     }
 
     public void resetGame(){
         model.resetModel();
+    }
+
+    public void saveRecord(Context context){
+        dbhelper = new DatabaseHelper(context);
+        long id = dbhelper.insertRecord(new Record("jobe", model.getDifficulty(), model.getSeqSize()));
     }
 }

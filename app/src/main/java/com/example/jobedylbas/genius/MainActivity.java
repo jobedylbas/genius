@@ -11,18 +11,16 @@ import com.example.jobedylbas.genius.database.DatabaseHelper;
 
 
 public class MainActivity extends AppCompatActivity{
-    private DatabaseHelper db;
+    private final static String TAG = MainActivity.class.getName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        db = new DatabaseHelper(getApplicationContext());
-
         findViewById(R.id.new_game_btn).setOnClickListener(clickHandler);
         Button load_game_btn = (Button) findViewById(R.id.load_game_btn);
         findViewById(R.id.records_btn).setOnClickListener(clickHandler);
-
 
     }
 

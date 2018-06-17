@@ -32,13 +32,13 @@
         android:layout_marginBottom="52dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/easyRecords"
+        app:layout_constraintBottom_toTopOf="@+id/easy_records"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@mipmap/trophy_foreground" />
 
     <Button
-        android:id="@+id/easyRecords"
+        android:id="@+id/easy_records"
         android:layout_width="112dp"
         android:layout_height="43dp"
         android:layout_marginEnd="8dp"
@@ -55,7 +55,7 @@
 
 
     <Button
-        android:id="@+id/normalRecords"
+        android:id="@+id/normal_records"
         android:layout_width="112dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -68,12 +68,12 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/easyRecords" />
+        app:layout_constraintTop_toBottomOf="@+id/easy_records" />
 
 
 
     <Button
-        android:id="@+id/hardcoreRecords"
+        android:id="@+id/hardcore_records"
         android:layout_width="112dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -86,6 +86,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/normalRecords" />
+        app:layout_constraintTop_toBottomOf="@+id/normal_records" />
 
 </android.support.constraint.ConstraintLayout>

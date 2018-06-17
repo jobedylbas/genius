@@ -23,12 +23,12 @@ import static com.example.jobedylbas.genius.database.DatabaseContract.Entry.RECO
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String LOG = "RecordDbHelper";
+    public static final String TAG = DatabaseHelper.class.getSimpleName();
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Record.db";
+    public static final String DATABASE_NAME = "database.db";
 
     private static final String SQL_CREATE_TABLE =
-            "CREATE TABLE " + RECORDS_TABLE + " ( " +
+            "CREATE TABLE IF NOT EXISTS " + RECORDS_TABLE + " ( " +
                 KEY_ID + " INTEGER PRIMARY KEY, "+
                 KEY_PLAYER_NAME + " TEXT, " +
                 KEY_DIFFICULTY + " INTEGER, " +
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_DIFFICULTY, record.getDifficulty());
         values.put(KEY_SEQ_SIZE, record.getSeq_size());
 
-        long record_id = db.insert(DATABASE_NAME, null, values);
+        long record_id = db.insert(RECORDS_TABLE, null, values);
         db.close();
         return record_id;
     }
@@ -79,20 +79,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Record> getRecordsByDifficulty(Integer difficulty){
+    public List<Record> getRecordsByDifficulty(Integer difficulty, Integer limit){
         List<Record> records = new ArrayList<Record>();
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + RECORDS_TABLE + " WHERE " +
                 KEY_DIFFICULTY + " = " + difficulty + " ORDER BY " +
-                KEY_SEQ_SIZE + " DESC";
+                KEY_SEQ_SIZE + " DESC LIMIT " + limit ;
         Cursor cursor = db.rawQuery(selectQuery,null);
 
         if(cursor.moveToFirst()){
             do{
                 Record record = new Record(
                         cursor.getString(cursor.getColumnIndex(KEY_PLAYER_NAME)),
-                        cursor.getInt(cursor.getColumnIndex(KEY_SEQ_SIZE)),
-                        difficulty
+                        difficulty,
+                        cursor.getInt(cursor.getColumnIndex(KEY_SEQ_SIZE))
+
                 );
                 records.add(record);
             }while(cursor.moveToNext());

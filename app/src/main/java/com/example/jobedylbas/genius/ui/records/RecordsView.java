@@ -14,6 +14,7 @@ import com.example.jobedylbas.genius.R;
  */
 
 public class RecordsView extends AppCompatActivity {
+    private final static String TAG = RecordsView.class.getName();
     private RecordsPresenter presenter;
     private Integer difficulty;
     private LinearLayout parent;
@@ -24,14 +25,13 @@ public class RecordsView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blank_screen);
-        difficulty = getIntent().getIntExtra("GAME_DIFF", R.id.easy_btn);
+        difficulty = getIntent().getIntExtra("GAME_DIFF", R.id.easy_records);
         presenter = new RecordsPresenter(this, getApplicationContext());
 
         parent = findViewById(R.id.records_parent);
         layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         presenter.getRecords(difficulty);
-
     }
 
     public void inflate(Integer i, String player_name, Integer seq_size){
@@ -42,11 +42,11 @@ public class RecordsView extends AppCompatActivity {
 
         // Add the text to the row
         TextView aux = view.findViewById(R.id.position_text);
-        aux.setText(i);
+        aux.setText(String.valueOf(i));
         aux = view.findViewById(R.id.player_text);
         aux.setText(player_name);
         aux = view.findViewById(R.id.seq_text);
-        aux.setText(seq_size);
+        aux.setText(String.valueOf(seq_size));
     }
 
     public void noRecords(){

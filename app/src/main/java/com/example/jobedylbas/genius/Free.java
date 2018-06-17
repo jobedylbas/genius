@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class Free extends AppCompatActivity {
+    private final static String TAG = Free.class.getName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

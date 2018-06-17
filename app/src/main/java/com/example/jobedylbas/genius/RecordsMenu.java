@@ -14,6 +14,7 @@ import com.example.jobedylbas.genius.ui.records.RecordsView;
  */
 
 public class RecordsMenu extends AppCompatActivity {
+    private final static String TAG = RecordsMenu.class.getName();
     private int difficulty;
 
     @Override
@@ -22,9 +23,9 @@ public class RecordsMenu extends AppCompatActivity {
         setContentView(R.layout.records_type);
 
         // Bind Buttons
-        findViewById(R.id.easyRecords).setOnClickListener(this.clickHandler);
-        findViewById(R.id.normalRecords).setOnClickListener(this.clickHandler);
-        findViewById(R.id.hardcoreRecords).setOnClickListener(this.clickHandler);
+        findViewById(R.id.easy_records).setOnClickListener(this.clickHandler);
+        findViewById(R.id.normal_records).setOnClickListener(this.clickHandler);
+        findViewById(R.id.hardcore_records).setOnClickListener(this.clickHandler);
     }
 
 
@@ -33,13 +34,13 @@ public class RecordsMenu extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.easyRecords:
+                case R.id.easy_records:
                     difficulty = R.id.easy_btn;
                     break;
-                case R.id.normalRecords:
+                case R.id.normal_records:
                     difficulty = R.id.normal_btn;
                     break;
-                case R.id.hardcoreRecords:
+                case R.id.hardcore_records:
                     difficulty = R.id.hardcore_btn;
                     break;
                 default:
