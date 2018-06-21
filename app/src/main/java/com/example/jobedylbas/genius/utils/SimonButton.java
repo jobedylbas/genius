@@ -49,12 +49,12 @@ public class SimonButton  {
     }
 
     public void releaseBtn(){
-        button_object.setClickable(false);
-        button_object.setEnabled(false);
+        this.button_object.setClickable(false);
+        this.button_object.setEnabled(false);
     }
 
     public void bindBtn(){
-        button_object.setClickable(true);
-        button_object.setEnabled(true);
+        this.button_object.setClickable(true);
+        this.button_object.setEnabled(true);
     }
 }

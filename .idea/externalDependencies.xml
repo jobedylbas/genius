@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="Coverage" />
+    <plugin id="com.android.tools.apk" />
+    <plugin id="com.android.tools.games" />
+    <plugin id="com.android.tools.ndk" />
+    <plugin id="com.google.urlassistant" />
+    <plugin id="org.jetbrains.android" />
+    <plugin id="org.jetbrains.plugins.yaml" />
+  </component>
+</project>

@@ -26,10 +26,6 @@ public class GamePresenter implements GamePresenterInterface {
         this.view = view;
     }
 
-    public void setModel(List<Integer> btn_ids) {
-        this.model = new GameModel(btn_ids);
-    }
-
     public void newGame(Integer diff) {
         view.setLayout(diff);
         model = new GameModel(view.getBtnList());
@@ -69,13 +65,9 @@ public class GamePresenter implements GamePresenterInterface {
         model.resetModel();
     }
 
-    public Integer getModelBtnSize(){
-        return model.getSeqSize();
-    }
-
     public boolean saveRecord(String player_name){
         dbhelper = new DatabaseHelper(view.getViewContext());
-        long id = dbhelper.insertRecord(new Record(player_name, view.getDifficulty(), model.getSeqSize()));
+        long id = dbhelper.insertRecord(player_name, view.getDifficulty(), model.getSeqSize());
         return true;
     }
 }

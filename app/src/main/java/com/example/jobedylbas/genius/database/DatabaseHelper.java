@@ -58,13 +58,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onUpgrade(sqLiteDatabase, oldVersion, newVersion);
     }
 
-    public long insertRecord(Record record){
+    public long insertRecord(String player_name, Integer diff, Integer seq_size){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_PLAYER_NAME, record.getPlayerName());
-        values.put(KEY_DIFFICULTY, record.getDifficulty());
-        values.put(KEY_SEQ_SIZE, record.getSeq_size());
+        values.put(KEY_PLAYER_NAME, player_name);
+        values.put(KEY_DIFFICULTY, diff);
+        values.put(KEY_SEQ_SIZE, seq_size);
 
         long record_id = db.insert(RECORDS_TABLE, null, values);
         db.close();

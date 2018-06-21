@@ -17,7 +17,6 @@ public class RecordsPresenter implements RecordsPresenterInterface{
     private final static String TAG = RecordsPresenter.class.getName();
     private DatabaseHelper model;
     private RecordsView view;
-    private SQLiteDatabase db;
 
     public RecordsPresenter(RecordsView view, Context context){
         this.view = view;

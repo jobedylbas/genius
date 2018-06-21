@@ -1,5 +1,6 @@
 package com.example.jobedylbas.genius.ui.game;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.SoundPool;
@@ -25,6 +26,7 @@ import com.example.jobedylbas.genius.utils.SimonButton;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import static java.lang.Thread.sleep;
@@ -141,36 +143,39 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         bindButtons();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         setPoints(INITIAL_POINTS);
     }
 
     public void playSeq(Queue<Integer> btn_ids) {
-
         final Queue<Integer> btn_list = btn_ids;
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Button btn;
                 for(final Integer btn_id : btn_list) {
-                    try {
-                        Thread.sleep(interval);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                    btn = findViewById(btn_id);
+                    if(btn.isClickable() && btn.isEnabled()) {
+                        try {
+                            Thread.sleep(interval);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
-                                Log.d("playSeq", String.valueOf(findViewById(btn_id)));
-                                findViewById(btn_id).performLongClick();
-                            }
-                        });
-                        //Thread.sleep(250);
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
+                                    Log.d("playSeq", String.valueOf(findViewById(btn_id)));
+                                    findViewById(btn_id).performLongClick();
+                                }
+                            });
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
                     }
                 }
             }
         }).start();
     }
 
+    @SuppressLint("SetTextI18n")
     public void gameOver(Integer score){
         for (SimonButton current_button : buttons){
             sp.stop(current_button.getSoundId());
@@ -272,6 +277,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         setOnClick(buttons);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setOnClick(SimonButton[] buttons){
 
         for (final SimonButton current_button : buttons) {
@@ -352,6 +358,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void setPoints(Integer points){
         TextView points_view = findViewById(R.id.points);
         points_view.setText(getResources().getString(R.string.points)+" "+String.valueOf(points));

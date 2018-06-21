@@ -9,8 +9,10 @@ import java.util.List;
  */
 
 public interface GamePresenterInterface {
-    void setModel(List<Integer> btn_ids);
     void newGame(Integer diff);
     void newRound();
+    void endGame();
     void checkButton(Integer btn_id);
+    void resetGame();
+    boolean saveRecord(String player_name);
 }
