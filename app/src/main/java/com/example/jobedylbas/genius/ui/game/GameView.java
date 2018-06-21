@@ -223,7 +223,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
                 EditText player_name = findViewById(R.id.player_name);
                 if(TextUtils.isEmpty(player_name.getText())){
                     Context context = getViewContext();
-                    CharSequence text = "Name is required!";
+                    CharSequence text = getString(R.string.erroname);;
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -232,7 +232,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
                     boolean res = presenter.saveRecord(player_name.getText().toString());
                     if(res){
                         Context context = getViewContext();
-                        CharSequence text = "Record saved!";
+                        CharSequence text = getString(R.string.saved);
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();

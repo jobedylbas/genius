@@ -25,7 +25,9 @@
     <string name="third">3rd</string>
     <string name="metric">th</string>
     <string name="newrecord">New Record!!</string>
-    <string name="congratulations">Congratulations.</string>
+    <string name="congratulations">Congratulations :)</string>
     <string name="name">Name</string>
     <string name="skip">Skip</string>
+    <string name="erroname">Name is required.</string>
+    <string name="saved">Record saved.</string>
 </resources>

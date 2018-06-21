@@ -14,7 +14,7 @@
             android:textColor="@color/colorBlack"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:background="@color/Blue" />
+            android:background="@color/Sea" />
         <TextView
             android:id="@+id/player_text"
             android:layout_width="210dp"
@@ -31,7 +31,7 @@
         android:id="@+id/seq_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Green"
+        android:background="@color/Grass"
         android:padding="10dp"
         android:text="150"
         android:textAlignment="center"

@@ -23,7 +23,9 @@
     <string name="third">3º</string>
     <string name="metric">º</string>
     <string name="newrecord">Novo Recorde!!</string>
-    <string name="congratulations">Parabéns.</string>
+    <string name="congratulations">Parabéns :)</string>
     <string name="name">Nome</string>
     <string name="skip">Prosseguir</string>
+    <string name="erroname">O nome é obrigatório.</string>
+    <string name="saved">Recorde salvo.</string>
 </resources>
