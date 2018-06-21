@@ -13,7 +13,7 @@ import com.example.jobedylbas.genius.R;
  * Created by jobedylbas on 03/06/18.
  */
 
-public class RecordsView extends AppCompatActivity {
+public class RecordsView extends AppCompatActivity implements RecordsViewInterface{
     private final static String TAG = RecordsView.class.getName();
     private RecordsPresenter presenter;
     private Integer difficulty;
@@ -66,10 +66,10 @@ public class RecordsView extends AppCompatActivity {
     }
 
     public void noRecords(){
-        TextView norecords = findViewById(R.id.norecords_text);
+        TextView no_records = findViewById(R.id.norecords_text);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-        norecords.setText(R.string.norecords);
-        norecords.setLayoutParams(params);
+        no_records.setText(R.string.norecords);
+        no_records.setLayoutParams(params);
     }
 }

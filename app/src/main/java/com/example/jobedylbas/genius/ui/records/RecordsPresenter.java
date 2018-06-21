@@ -13,7 +13,7 @@ import java.util.List;
  * Created by jobedylbas on 29/05/18.
  */
 
-public class RecordsPresenter {
+public class RecordsPresenter implements RecordsPresenterInterface{
     private final static String TAG = RecordsPresenter.class.getName();
     private DatabaseHelper model;
     private RecordsView view;

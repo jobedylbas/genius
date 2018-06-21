@@ -13,7 +13,7 @@ import java.util.Random;
  * the game Genius like create sequence of colors
  */
 
-public class GameModel implements GameModelInterface {
+public class GameModel {
     private final static String TAG = GameModel.class.getName();
     private final static Queue<Integer> EMPTY_LIST = new LinkedList<>();
     private final static Integer ZERO = 0;

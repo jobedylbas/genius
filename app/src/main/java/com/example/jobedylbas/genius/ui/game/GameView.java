@@ -9,14 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +31,7 @@ import static java.lang.Thread.sleep;
 
 /**
  * Created by jobedylbas on 03/05/18.
- * GameModel Easy show the activity/layout for Difficulty Easy
+ * GameView the activity/layout
  * of game Genius
  */
 
@@ -88,6 +86,16 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {   for(SimonButton current_button : buttons){
+        sp.stop(current_button.getSoundId());
+    }
+        sp.release();
+        presenter.resetGame();
+        super.onBackPressed();
     }
 
     public Integer getDifficulty(){ return difficulty; }
@@ -205,6 +213,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
             current_button.releaseBtn();
         }
         sp.release();
+
         final ConstraintLayout new_record = findViewById(R.id.new_record);
         new_record.setVisibility(View.VISIBLE);
 
@@ -213,7 +222,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
             public void onClick(View view) {
                 EditText player_name = findViewById(R.id.player_name);
                 if(TextUtils.isEmpty(player_name.getText())){
-                    Context context = getApplicationContext();
+                    Context context = getViewContext();
                     CharSequence text = "Name is required!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -222,11 +231,13 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
                 else {
                     boolean res = presenter.saveRecord(player_name.getText().toString());
                     if(res){
-                        Context context = getApplicationContext();
+                        Context context = getViewContext();
                         CharSequence text = "Record saved!";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        view.setEnabled(false);
+                        view.setClickable(false);
                     }
                 }
             }
@@ -243,7 +254,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
     }
 
     private void bindButtons(){
-        Media media = new Media(getApplicationContext());
+        Media media = new Media(getViewContext());
         media.setSoundPool();
         int[] soundsId = media.getSoundsId();
         sp = media.getSoundPool();
@@ -346,14 +357,5 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         points_view.setText(getResources().getString(R.string.points)+" "+String.valueOf(points));
     }
 
-    @Override
-    public void onBackPressed()
-    {   for(SimonButton current_button : buttons){
-            sp.stop(current_button.getSoundId());
-        }
-        sp.release();
-        presenter.resetGame();
-        super.onBackPressed();
-    }
 
 }
