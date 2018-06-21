@@ -15,25 +15,22 @@ import java.util.Random;
 
 public class GameModel implements GameModelInterface {
     private final static String TAG = GameModel.class.getName();
-    private Queue<Integer> backup_seq;
+    private final static Queue<Integer> EMPTY_LIST = new LinkedList<>();
+    private final static Integer ZERO = 0;
     private Queue<Integer> btn_seq;
     private Queue<Integer> aux_seq;
     private List<Integer> btn_available;
     private Integer seq_size;
-    private Integer difficulty;
 
-    public GameModel(List<Integer> btn_available, int difficulty) {
-        this.backup_seq = new LinkedList<>();
-        this.btn_seq = new LinkedList<>();
-        this.aux_seq = new LinkedList<>();
+    public GameModel(List<Integer> btn_available) {
+        btn_seq = EMPTY_LIST;
+        aux_seq = EMPTY_LIST;
         this.btn_available = btn_available;
-        this.difficulty = difficulty;
-        this.seq_size = aux_seq.size();
+        seq_size = ZERO;
     }
 
     // Return the size of the button sequence
-    public Integer getSeqSize() {
-        return seq_size;}
+    public Integer getSeqSize() { return seq_size; }
 
     public Queue<Integer> getBtnSeq(){ return btn_seq; }
 
@@ -43,9 +40,7 @@ public class GameModel implements GameModelInterface {
         seq_size = aux_seq.size();
         btn_seq = aux_seq;
         Integer btn = btn_available.get(rand.nextInt(btn_available.size()));
-        Log.d(TAG, String.valueOf(btn));
         btn_seq.add(btn);
-        backup_seq.add(btn);
         aux_seq = new LinkedList<>();
     }
 
@@ -67,10 +62,9 @@ public class GameModel implements GameModelInterface {
     }
 
     public void resetModel(){
-        this.seq_size = 0;
-        this.btn_seq = new LinkedList<>();
-        this.aux_seq = new LinkedList<>();
+        btn_seq = EMPTY_LIST;
+        aux_seq = EMPTY_LIST;
+        seq_size = ZERO;
     }
 
-    public int getDifficulty(){ return this.difficulty;}
 }

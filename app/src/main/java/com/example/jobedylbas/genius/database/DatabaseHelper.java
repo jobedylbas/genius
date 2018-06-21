@@ -101,4 +101,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return records;
     }
+
+    public Integer getTheMinRecord(Integer difficulty){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT MIN(" + KEY_SEQ_SIZE + ") FROM " + RECORDS_TABLE + " WHERE " +
+                KEY_DIFFICULTY + " = " + difficulty;
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        cursor.moveToFirst();
+        db.close();
+        return cursor.getInt(0);
+    }
 }

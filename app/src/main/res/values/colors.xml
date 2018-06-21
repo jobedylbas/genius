@@ -5,22 +5,15 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#FFF</color>
-    <color name="colorRed">#E54848</color>
-    <color name="colorShinyRed">#E70000</color>
-    <color name="colorBlue">#11A2EA</color>
-    <color name="colorShinyBlue">#00CDFF</color>
-    <color name="colorGreen">#67C947</color>
-    <color name="colorShinyGreen">#3FFF00</color>
-    <color name="colorYellow">#F7CD48</color>
-    <color name="colorShinyYellow">#F7FF48</color>
-    <color name="colorPink">#FF7581</color>
-    <color name="colorShinyPink">#FF4081</color>
-    <color name="colorPurple">#BC73BD</color>
-    <color name="colorShinyPurple">#831A84</color>
-    <color name="colorOrange">#F67C24</color>
-    <color name="colorShinyOrange">#FF5100</color>
-    <color name="colorBrown">#996B42</color>
-    <color name="colorShinyBrown">#592E0b</color>
-    <color name="colorTransGray">#CCE8E8E8</color>
-
+    <color name="Red">#E54848</color>
+    <color name="ShinyRed">#E70000</color>
+    <color name="Blue">#11A2EA</color>
+    <color name="ShinyBlue">#00CDFF</color>
+    <color name="Green">#67C947</color>
+    <color name="ShinyGreen">#3FFF00</color>
+    <color name="Yellow">#F7CD48</color>
+    <color name="ShinyYellow">#F7FF48</color>
+    <color name="TransGray">#CCE8E8E8</color>
+    <color name="LightGray">#D9D9D9</color>
+    <color name="Gray">#A6A6A6</color>
 </resources>

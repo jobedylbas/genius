@@ -18,4 +18,12 @@
     <string name="game_over">FIM DE JOGO</string>
     <string name="norecords">Não há recordes ainda.</string>
     <string name="points">Pontuação: </string>
+    <string name="first">1º</string>
+    <string name="second">2º</string>
+    <string name="third">3º</string>
+    <string name="metric">º</string>
+    <string name="newrecord">Novo Recorde!!</string>
+    <string name="congratulations">Parabéns.</string>
+    <string name="name">Nome</string>
+    <string name="skip">Prosseguir</string>
 </resources>

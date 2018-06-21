@@ -1,13 +1,13 @@
 package com.example.jobedylbas.genius.ui.game;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,8 +15,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jobedylbas.genius.MainActivity;
 import com.example.jobedylbas.genius.R;
@@ -27,7 +29,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import static java.lang.Thread.dumpStack;
 import static java.lang.Thread.sleep;
 
 /**
@@ -42,10 +43,11 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
     private static final int HARD = R.id.hardcore_btn;
     private static final int TOP_LINE = R.id.top_line;
     private static final int BOT_LINE = R.id.bottom_line;
-    private Boolean SOUND = true;
+    private static final int INITIAL_POINTS = 0;
+    private static Boolean SOUND = true;
     private GamePresenter presenter;
     private List<Integer> btn_list;
-    private Integer game_diff;
+    private Integer difficulty;
     private SimonButton[] buttons;
     private Integer interval;
     private Integer long_click_interval;
@@ -54,10 +56,15 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        game_diff = getIntent().getIntExtra("GAME_DIFF", EASY);
+        difficulty = getIntent().getIntExtra("GAME_DIFF", EASY);
 
         presenter = new GamePresenter(this);
-        presenter.newGame(game_diff);
+        presenter.newGame(difficulty);
+        presenter.newRound();
+    }
+
+    public Context getViewContext(){
+        return getApplicationContext();
     }
 
     @Override
@@ -83,6 +90,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         return super.onOptionsItemSelected(item);
     }
 
+    public Integer getDifficulty(){ return difficulty; }
 
     // Get all the buttons id
     private void getAllButtonsId(){
@@ -103,8 +111,8 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         return this.btn_list;
     }
     // Set the layout of the game based on difficulty
-    public void setLayout(Integer game_diff){
-        switch (game_diff){
+    public void setLayout(Integer difficulty){
+        switch (difficulty){
             case EASY:
                 interval = 1000;
                 long_click_interval = 600;
@@ -126,10 +134,11 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setPoints(INITIAL_POINTS);
     }
 
     public void playSeq(Queue<Integer> btn_ids) {
-        setPoints(btn_ids.size()-1);
+
         final Queue<Integer> btn_list = btn_ids;
         new Thread(new Runnable() {
             @Override
@@ -154,46 +163,29 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         }).start();
     }
 
-    @SuppressLint("SetTextI18n")
     public void gameOver(Integer score){
-        for (final SimonButton current_button : buttons){
+        for (SimonButton current_button : buttons){
             sp.stop(current_button.getSoundId());
-
-            current_button.getButtonObject().setEnabled(false);
-            current_button.getButtonObject().setClickable(false);
+            current_button.releaseBtn();
         }
         sp.release();
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final ConstraintLayout game_over = findViewById(R.id.endgame);
+        game_over.setVisibility(View.VISIBLE);
 
-        View game_over_view = layoutInflater.inflate(R.layout.inflate_end_game, null, false);
-
-        LinearLayout container = findViewById(R.id.container);
-
-        container.addView(game_over_view);
-        TextView score_view = container.findViewById(R.id.finalscore);
+        TextView score_view = game_over.findViewById(R.id.finalscore);
         score_view.setText(score.toString());
 
         findViewById(R.id.restart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LinearLayout container = findViewById(R.id.container);
-                container.removeView(findViewById(R.id.endgame));
+                game_over.setVisibility(View.GONE);
                 bindButtons();
                 presenter.resetGame();
                 presenter.newRound();
+                setPoints(0);
                 for (final SimonButton current_button : buttons){
-                    current_button.getButtonObject().setEnabled(true);
-                    current_button.getButtonObject().setClickable(true);
+                    current_button.bindBtn();
                 }
-            }
-        });
-
-        findViewById(R.id.save).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                presenter.saveRecord(getBaseContext());
-                view.setEnabled(false);
-                view.setClickable(false);
             }
         });
 
@@ -201,8 +193,50 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
             @Override
             public void onClick(View view) {
                 Intent main_menu = new Intent(GameView.this, MainActivity.class);
-                finish();
                 startActivity(main_menu);
+            }
+        });
+
+    }
+
+    public void newRecord(){
+        for (SimonButton current_button : buttons){
+            sp.stop(current_button.getSoundId());
+            current_button.releaseBtn();
+        }
+        sp.release();
+        final ConstraintLayout new_record = findViewById(R.id.new_record);
+        new_record.setVisibility(View.VISIBLE);
+
+        findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText player_name = findViewById(R.id.player_name);
+                if(TextUtils.isEmpty(player_name.getText())){
+                    Context context = getApplicationContext();
+                    CharSequence text = "Name is required!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                else {
+                    boolean res = presenter.saveRecord(player_name.getText().toString());
+                    if(res){
+                        Context context = getApplicationContext();
+                        CharSequence text = "Record saved!";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                }
+            }
+        });
+
+        findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new_record.setVisibility(View.GONE);
+                presenter.endGame();
             }
         });
 
@@ -292,9 +326,8 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-//                                current_button.getSound().stop();
+                                sp.stop(current_button.getSoundId());
                                 current_button.setBkgNormal();
-                                Log.d("View/onTouch/ButtonId", String.valueOf(current_button.getButtonObject().getId()));
                                 presenter.checkButton(current_button.getButtonObject().getId());
                             }
                         });
@@ -319,6 +352,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
             sp.stop(current_button.getSoundId());
         }
         sp.release();
+        presenter.resetGame();
         super.onBackPressed();
     }
 

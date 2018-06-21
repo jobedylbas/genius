@@ -21,7 +21,7 @@ public class Media {
     public Media(Context context){ this.context = context;}
 
     public void setSoundPool(){
-        sp = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
+        sp = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
         int simonSound1 = sp.load(context, R.raw.simon_sound1,1);
         int simonSound2 = sp.load(context, R.raw.simon_sound2,1);
         int simonSound3 = sp.load(context, R.raw.simon_sound3,1);

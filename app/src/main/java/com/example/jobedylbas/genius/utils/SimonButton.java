@@ -24,7 +24,6 @@ public class SimonButton  {
         this.shiny_color = shiny_color;
     }
 
-
     public int getSoundId() {
         return soundId;
     }
@@ -47,5 +46,15 @@ public class SimonButton  {
 
     public void setBkgShiny(){
         this.button_object.setBackgroundResource(shiny_color);
+    }
+
+    public void releaseBtn(){
+        button_object.setClickable(false);
+        button_object.setEnabled(false);
+    }
+
+    public void bindBtn(){
+        button_object.setClickable(true);
+        button_object.setEnabled(true);
     }
 }

@@ -20,4 +20,12 @@
     <string name="buttons">buttons</string>
     <string name="norecords">No records yet.</string>
     <string name="points">Points: </string>
+    <string name="first">1st</string>
+    <string name="second">2nd</string>
+    <string name="third">3rd</string>
+    <string name="metric">th</string>
+    <string name="newrecord">New Record!!</string>
+    <string name="congratulations">Congratulations.</string>
+    <string name="name">Name</string>
+    <string name="skip">Skip</string>
 </resources>

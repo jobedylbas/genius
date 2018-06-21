@@ -10,6 +10,7 @@ import com.example.jobedylbas.genius.database.models.GameModel;
 import com.example.jobedylbas.genius.database.models.Record;
 
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by jobedylbas on 07/05/18.
@@ -17,7 +18,6 @@ import java.util.List;
 
 public class GamePresenter implements GamePresenterInterface {
     private final static String TAG = GamePresenter.class.getName();
-    private Record record;
     private DatabaseHelper dbhelper;
     private GameView view;
     private GameModel model;
@@ -26,42 +26,56 @@ public class GamePresenter implements GamePresenterInterface {
         this.view = view;
     }
 
-    public void setModel(List<Integer> btn_ids, Integer diff) {
-        this.model = new GameModel(btn_ids, diff);
+    public void setModel(List<Integer> btn_ids) {
+        this.model = new GameModel(btn_ids);
     }
 
     public void newGame(Integer diff) {
         view.setLayout(diff);
-        model = new GameModel(view.getBtnList(), diff);
-        newRound();
+        model = new GameModel(view.getBtnList());
     }
 
     public void newRound(){
         model.newBtnSeq();
+        view.setPoints(model.getSeqSize());
         view.playSeq(model.getBtnSeq());
+    }
+
+    public void endGame(){
+        view.gameOver(model.getSeqSize());
     }
 
     public void checkButton(Integer btn_id){
         if(model.checkBtn(btn_id)) {
             Log.d(TAG, "Right Button");
-            if (model.isEmptySeq()) {
+            if(model.isEmptySeq()){
                 Log.d(TAG, "Empty Sequence");
-                this.newRound();
+                newRound();
             }
         }
-        else{
-               Log.d("Presenter/CheckBtn","Wrong Button");
-               view.gameOver(model.getSeqSize());
+        else {
+            Log.d(TAG, "Wrong Button");
+            dbhelper = new DatabaseHelper(view.getViewContext());
+            Integer min_record = dbhelper.getTheMinRecord(view.getDifficulty());
+            if (model.getSeqSize() >= min_record) {
+                view.newRecord();
+            } else {
+                endGame();
+            }
         }
-
     }
 
     public void resetGame(){
         model.resetModel();
     }
 
-    public void saveRecord(Context context){
-        dbhelper = new DatabaseHelper(context);
-        long id = dbhelper.insertRecord(new Record("jobe", model.getDifficulty(), model.getSeqSize()));
+    public Integer getModelBtnSize(){
+        return model.getSeqSize();
+    }
+
+    public boolean saveRecord(String player_name){
+        dbhelper = new DatabaseHelper(view.getViewContext());
+        long id = dbhelper.insertRecord(new Record(player_name, view.getDifficulty(), model.getSeqSize()));
+        return true;
     }
 }

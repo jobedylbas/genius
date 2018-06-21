@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.jobedylbas.genius.MainActivity"
     android:orientation="vertical">
 
@@ -60,11 +59,10 @@
                 android:background="@drawable/background_yellow" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+
+    <include layout="@layout/new_record"
+        android:visibility="gone"></include>
+    <include layout="@layout/inflate_end_game"
+        android:visibility="gone"></include>
 
 </FrameLayout>

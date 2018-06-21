@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_menu);
 
         findViewById(R.id.new_game_btn).setOnClickListener(clickHandler);
-        Button load_game_btn = (Button) findViewById(R.id.load_game_btn);
         findViewById(R.id.records_btn).setOnClickListener(clickHandler);
 
     }
