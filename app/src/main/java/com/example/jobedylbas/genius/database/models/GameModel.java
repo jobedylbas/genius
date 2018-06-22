@@ -23,10 +23,10 @@ public class GameModel {
     private Integer seq_size;
 
     public GameModel(List<Integer> btn_available) {
-        btn_seq = EMPTY_LIST;
-        aux_seq = EMPTY_LIST;
+        this.btn_seq = EMPTY_LIST;
+        this.aux_seq = EMPTY_LIST;
         this.btn_available = btn_available;
-        seq_size = ZERO;
+        this.seq_size = ZERO;
     }
 
     // Return the size of the button sequence
@@ -37,18 +37,18 @@ public class GameModel {
     // Create a new button sequence
     public void newBtnSeq() {
         Random rand = new Random();
-        seq_size = aux_seq.size();
-        btn_seq = aux_seq;
+        this.seq_size = aux_seq.size();
+        this.btn_seq = aux_seq;
         Integer btn = btn_available.get(rand.nextInt(btn_available.size()));
-        btn_seq.add(btn);
-        aux_seq = new LinkedList<>();
+        this.btn_seq.add(btn);
+        this.aux_seq = new LinkedList<>();
     }
 
     // Check if the button is equal the head of the button queue
     public boolean checkBtn(Integer btn_id) {
         if (btn_seq.element().equals(btn_id)) {
             Log.d(TAG, "Right Button");
-            aux_seq.add(btn_seq.poll());
+            this.aux_seq.add(btn_seq.poll());
             return true;
         }
         else {
@@ -62,9 +62,9 @@ public class GameModel {
     }
 
     public void resetModel(){
-        btn_seq = EMPTY_LIST;
-        aux_seq = EMPTY_LIST;
-        seq_size = ZERO;
+        this.btn_seq = EMPTY_LIST;
+        this.aux_seq = EMPTY_LIST;
+        this.seq_size = ZERO;
     }
 
 }

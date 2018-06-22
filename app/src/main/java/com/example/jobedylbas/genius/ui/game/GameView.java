@@ -192,13 +192,14 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
             @Override
             public void onClick(View view) {
                 game_over.setVisibility(View.GONE);
+                for (final SimonButton current_button : buttons){
+                    current_button.bindBtn();
+                }
                 bindButtons();
                 presenter.resetGame();
                 presenter.newRound();
                 setPoints(0);
-                for (final SimonButton current_button : buttons){
-                    current_button.bindBtn();
-                }
+
             }
         });
 
@@ -262,7 +263,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         Media media = new Media(getViewContext());
         media.setSoundPool();
         int[] soundsId = media.getSoundsId();
-        sp = media.getSoundPool();
+        this.sp = media.getSoundPool();
 
         SimonButton btn_red = new SimonButton(soundsId[0], (Button) findViewById(R.id.btn_red),
                 R.drawable.background_red, R.drawable.background_red_shiny);

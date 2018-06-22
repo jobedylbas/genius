@@ -62,7 +62,7 @@ public class GamePresenter implements GamePresenterInterface {
     }
 
     public void resetGame(){
-        model.resetModel();
+        this.model.resetModel();
     }
 
     public boolean saveRecord(String player_name){
