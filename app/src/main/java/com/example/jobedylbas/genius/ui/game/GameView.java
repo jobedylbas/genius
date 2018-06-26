@@ -44,6 +44,7 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
     private static final int TOP_LINE = R.id.top_line;
     private static final int BOT_LINE = R.id.bottom_line;
     private static final int INITIAL_POINTS = 0;
+    private static Boolean PLAYER_TURN = false;
     private static Boolean SOUND = true;
     private GamePresenter presenter;
     private List<Integer> btn_list;
@@ -149,30 +150,31 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
 
     public void playSeq(Queue<Integer> btn_ids) {
         final Queue<Integer> btn_list = btn_ids;
+        PLAYER_TURN = false;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Button btn;
                 for(final Integer btn_id : btn_list) {
-                    btn = findViewById(btn_id);
-                    if(btn.isClickable() && btn.isEnabled()) {
-                        try {
-                            Thread.sleep(interval);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
+                    try {
+                        Thread.sleep(interval);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                                    Log.d("playSeq", String.valueOf(findViewById(btn_id)));
-                                    findViewById(btn_id).performLongClick();
-                                }
-                            });
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
+                                Log.d("playSeq", String.valueOf(findViewById(btn_id)));
+                                findViewById(btn_id).performLongClick();
+                            }
+                        });
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+
                     }
                 }
+                PLAYER_TURN = true;
             }
         }).start();
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -316,18 +318,10 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
                     return true;
                 }
             });
-            current_button.getButtonObject().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view){
-                    if(SOUND) {
-                        sp.play(current_button.getSoundId(), 1.0f, 1.0f, 0, 0, 1.0f);
-                    }
-                }
-            });
             current_button.getButtonObject().setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && PLAYER_TURN){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -340,11 +334,13 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
                         });
                     }
 
-                    if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP && PLAYER_TURN){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                sp.stop(current_button.getSoundId());
+                                if(SOUND) {
+                                    sp.stop(current_button.getSoundId());
+                                }
                                 current_button.setBkgNormal();
                                 presenter.checkButton(current_button.getButtonObject().getId());
                             }
