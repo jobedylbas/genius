@@ -3,6 +3,7 @@ package com.example.jobedylbas.genius.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -104,13 +105,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Integer getTheMinRecord(Integer difficulty){
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT MIN(" + KEY_SEQ_SIZE +
-                ") FROM (SELECT * FROM " + RECORDS_TABLE +
-                " WHERE " + KEY_DIFFICULTY + " = " + difficulty +
-                " ORDER BY " + KEY_SEQ_SIZE + " DESC LIMIT 10)";
-        Cursor cursor = db.rawQuery(selectQuery,null);
-        cursor.moveToFirst();
-        db.close();
-        return cursor.getInt(0);
+        if(DatabaseUtils.queryNumEntries(db, RECORDS_TABLE) > 10){
+            String selectQuery = "SELECT MIN(" + KEY_SEQ_SIZE +
+                    ") FROM (SELECT * FROM " + RECORDS_TABLE +
+                    " WHERE " + KEY_DIFFICULTY + " = " + difficulty +
+                    " ORDER BY " + KEY_SEQ_SIZE + " DESC LIMIT 10)";
+            Cursor cursor = db.rawQuery(selectQuery,null);
+            cursor.moveToFirst();
+            db.close();
+            return cursor.getInt(0);
+        }
+        else{
+            db.close();
+            return 1;
+        }
     }
 }
