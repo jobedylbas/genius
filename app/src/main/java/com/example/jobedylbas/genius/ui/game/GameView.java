@@ -225,6 +225,9 @@ public class GameView extends AppCompatActivity implements GameViewInterface {
         final ConstraintLayout new_record = findViewById(R.id.new_record);
         new_record.setVisibility(View.VISIBLE);
 
+        findViewById(R.id.save).setClickable(true);
+        findViewById(R.id.save).setEnabled(true);
+
         findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
